@@ -9,13 +9,12 @@ use toy_os::println;
 
 #[no_mangle]
 pub extern "C" fn _start() -> ! {
-    println!("Hello World{}", "!");
     toy_os::init();
+    println!("Rust Toy OS!");
 
     #[cfg(test)]
     test_main();
-
-    loop {}
+    toy_os::hlt_loop();
 }
 
 /// This function is called on panic.
@@ -23,7 +22,7 @@ pub extern "C" fn _start() -> ! {
 #[panic_handler]
 fn panic(info: &PanicInfo) -> ! {
     println!("{}", info);
-    loop {}
+    toy_os::hlt_loop();
 }
 
 #[cfg(test)]
